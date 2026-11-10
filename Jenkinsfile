@@ -1,4 +1,4 @@
-
+                    
 pipeline {
     agent any
 
@@ -14,16 +14,20 @@ pipeline {
         stage('Build & Test') {
             steps {
                 bat '''
-                    call npm ci
+                set "PATH=C:\\Program Files\\nodejs;%PATH%"
 
-                    set "CI=true"
-                    call npm test -- --watchAll=false --passWithNoTests
+                node -v
+                npm -v
 
-                    call npm run build:uat:Horizon
+                call npm ci
+
+                set "CI=true"
+                call npm test -- --watchAll=false --passWithNoTests
+
+                call npm run build:uat:Horizon
                 '''
             }
         }
-
         stage('Archive Artifact') {
             steps {
                 archiveArtifacts artifacts: 'build/**',
