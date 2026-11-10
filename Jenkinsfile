@@ -15,19 +15,13 @@ pipeline {
             steps {
                 bat '''
                 set "PATH=C:\\Program Files\\nodejs;%PATH%"
-
-                node -v
-                npm -v
-
                 call npm ci
-
-                set "CI=true"
+                set CI=true
                 call npm test -- --watchAll=false --passWithNoTests
-
                 call npm run build:uat:Horizon
                 '''
-            }
-        }
+          }
+      }
         stage('Archive Artifact') {
             steps {
                 archiveArtifacts artifacts: 'build/**',
