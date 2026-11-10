@@ -15,8 +15,8 @@ pipeline {
             steps {
                 bat '''
                 set "PATH=C:\\Program Files\\nodejs;%PATH%"
+                set CI=false
                 call npm ci
-                set CI=true
                 call npm test -- --watchAll=false --passWithNoTests
                 call npm run build:uat:Horizon
                 '''
