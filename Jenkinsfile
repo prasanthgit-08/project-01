@@ -11,15 +11,15 @@ pipeline {
             }
         }
 
-        stage('Build & Test') {
-            steps {
-                bat '''
-                set "PATH=C:\\Program Files\\nodejs;%PATH%"
-                set CI=false
-                call npm ci
-                call npm test -- --watchAll=false --passWithNoTests
-                call npm run build:uat:Horizon
-                '''
+       stage('Build & Test') {
+          steps {
+              bat '''
+              set "PATH=C:\\Program Files\\nodejs;%PATH%"
+              call npm ci
+              call npm test -- --watchAll=false --passWithNoTests
+              set "CI=false"
+              call npm run build:uat:Horizon
+              '''
           }
       }
         stage('Archive Artifact') {
