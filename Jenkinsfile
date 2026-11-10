@@ -33,8 +33,9 @@ pipeline {
             steps {
             bat '''
                 set "PATH=C:\\Users\\Prasanth\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;%PATH%"
+                where docker
                 docker --version
-                docker compose up -d --build
+                docker-compose up -d --build
            '''
           }
        }
