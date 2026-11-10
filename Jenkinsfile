@@ -13,13 +13,27 @@ pipeline {
 
         stage('Check Jenkins Account') {
             steps {
-                bat '''
-                    whoami
-                    echo %USERPROFILE%
-                    echo %PATH%
-                    '''
-          }
+            bat '''
+            echo Username:
+            echo %USERNAME%
+
+            echo User Domain:
+            echo %USERDOMAIN%
+
+            echo User Profile:
+            echo %USERPROFILE%
+
+            echo Windows Identity:
+            C:\\Windows\\System32\\whoami.exe
+
+            echo Node:
+            "C:\\Program Files\\nodejs\\node.exe" --version
+
+            echo Docker:
+            "C:\\Users\\Prasanth\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" --version
+        '''
       }
+  }
 
         stage('Check Node & Docker') {
               steps {
