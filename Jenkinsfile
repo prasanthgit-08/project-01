@@ -11,46 +11,23 @@ pipeline {
             }
         }
 
-        stage('Check Jenkins Account') {
-            steps {
-            bat '''
-            echo Username:
-            echo %USERNAME%
-
-            echo User Domain:
-            echo %USERDOMAIN%
-
-            echo User Profile:
-            echo %USERPROFILE%
-
-            echo Windows Identity:
-            C:\\Windows\\System32\\whoami.exe
-
-            echo Node:
-            "C:\\Program Files\\nodejs\\node.exe" --version
-
-            echo Docker:
-            "C:\\Users\\Prasanth\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe" --version
-        '''
-      }
-  }
-
-        stage('Check Node & Docker') {
+          stage('Check Node & Docker') {
               steps {
                   bat '''
-                      echo Current Jenkins PATH:
-                      echo %PATH%
+                  echo Checking Node.js:
+                  where node
+                  node --version
 
-                      echo Checking Windows:
-                      echo %SystemRoot%
+                 echo Checking npm:
+                  where npm
+                  npm --version
 
-                      dir C:\\Windows\\System32\\where.exe
-                      dir "C:\\Program Files\\nodejs\\node.exe"
-                      dir "C:\\Program Files\\nodejs\\npm.cmd"
-                      dir "C:\\Users\\Prasanth\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe"
-                  '''
-              }
+                  echo Checking Docker:
+                  where docker
+                  docker --version
+                '''
           }
+      }
 
           stage('Build & Test') {
               steps {
