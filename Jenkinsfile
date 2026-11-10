@@ -31,8 +31,12 @@ pipeline {
 
         stage('Docker Compose') {
             steps {
-                bat 'docker compose up -d --build'
-            }
-        }
+            bat '''
+                set "PATH=C:\\Users\\Prasanth\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;%PATH%"
+                docker --version
+                docker compose up -d --build
+           '''
+          }
+       }
     }
 }
