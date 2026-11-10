@@ -22,6 +22,19 @@ pipeline {
               '''
           }
       }
+
+      stage('Check Node & Docker') {
+          steps {
+              bat '''
+                  where node
+                  node --version
+                  where npm
+                  npm --version
+                  where docker
+                  docker --version
+            '''
+        }
+    }
         stage('Archive Artifact') {
             steps {
                 archiveArtifacts artifacts: 'build/**',
@@ -32,8 +45,6 @@ pipeline {
         stage('Docker Compose') {
             steps {
             bat '''
-                set "PATH=C:\\Users\\Prasanth\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;%PATH%"
-                where docker
                 docker --version
                 docker-compose up -d --build
            '''
