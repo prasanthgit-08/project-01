@@ -11,35 +11,34 @@ pipeline {
             }
         }
 
-       stage('Check Node & Docker') {
-          steps {
-              bat '''
-                echo Current Jenkins PATH:
-                echo %PATH%
-
-                echo Checking Windows:
-                echo %SystemRoot%
-
-                dir C:\\Windows\\System32\\where.exe
-                dir "C:\\Program Files\\nodejs\\node.exe"
-                dir "C:\\Program Files\\nodejs\\npm.cmd"
-                dir "C:\\Users\\Prasanth\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe"
-            '''
+          stage('Build & Test') {
+              steps {
+                  bat '''
+                    call npm ci
+                    call npm test -- --watchAll=false --passWithNoTests
+                    set "CI=false"
+                    call npm run build:uat:Horizon
+                  '''
+              }
           }
-      }
 
-      stage('Check Node & Docker') {
-          steps {
-              bat '''
-                  where node
-                  node --version
-                  where npm
-                  npm --version
-                  where docker
-                  docker --version
-            '''
-        }
-    }
+         stage('Check Node & Docker') {
+              steps {
+                  bat '''
+                      echo Current Jenkins PATH:
+                      echo %PATH%
+
+                      echo Checking Windows:
+                      echo %SystemRoot%
+
+                      dir C:\\Windows\\System32\\where.exe
+                      dir "C:\\Program Files\\nodejs\\node.exe"
+                      dir "C:\\Program Files\\nodejs\\npm.cmd"
+                      dir "C:\\Users\\Prasanth\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe"
+                  '''
+              }
+          }
+
         stage('Archive Artifact') {
             steps {
                 archiveArtifacts artifacts: 'build/**',
