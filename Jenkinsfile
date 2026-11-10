@@ -11,6 +11,16 @@ pipeline {
             }
         }
 
+        stage('Check Jenkins Account') {
+            steps {
+                bat '''
+                    whoami
+                    echo %USERPROFILE%
+                    echo %PATH%
+                    '''
+          }
+      }
+
         stage('Check Node & Docker') {
               steps {
                   bat '''
