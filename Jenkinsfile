@@ -10,25 +10,7 @@ pipeline {
                 echo 'Source code pulled from GitHub'
             }
         }
-
-          stage('Check Node & Docker') {
-              steps {
-                  bat '''
-                  echo Checking Node.js:
-                  where node
-                  node --version
-
-                 echo Checking npm:
-                  where npm
-                  npm --version
-
-                  echo Checking Docker:
-                  where docker
-                  docker --version
-                '''
-          }
-      }
-
+      
           stage('Build & Test') {
               steps {
                   bat '''
